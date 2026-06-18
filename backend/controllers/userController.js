@@ -1,4 +1,4 @@
-import { User } from "../models/userModel.js";
+import User from "../models/userModel.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
@@ -59,7 +59,6 @@ const login = async(req, res) => {
         // return res.status(200).json({message: "Login Successful"}) 
         const tokenData = {
             userId: existingUser._id, 
-            username: existingUser.username
         }
 
         const token = await jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {expiresIn: '1d'})
@@ -84,8 +83,8 @@ export {login};
 
 const logout = async (req, res) => {
     try {
-        return res.status(200).cookie("logouttoken", "", {
-            maxAge: 1000 
+        return res.status(200).cookie("logintoken", "", {
+            maxAge: 0 
         }).json({
             success: true, 
             message: "You were successfully Logged Out"
@@ -95,3 +94,79 @@ const logout = async (req, res) => {
     }
 }
 export {logout}
+
+const OtherUsers = async (req, res) => {
+    try {
+        const loggedinUser = req.id
+        const currentUser = await User.findById(loggedinUser)
+
+        if(!currentUser || !currentUser.friends) return res.status(200).json({
+            success: true, 
+            friends: []
+        })
+
+        const myFriends = await User.find({_id: {
+            $in: currentUser.friends}
+        }).select("-password")
+
+        return res.status(200).json(myFriends)
+    }
+    catch(error){
+        console.log(error)
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+export {OtherUsers}
+
+// - X-X-X--X-X-X--X-X-X-X-X-X-X-X-X-X-X-
+
+const addFriend = async(req, res) => {
+    try {
+        const loggedinUser = req.id
+        const { friendId } = req.body
+
+        if(loggedinUser == friendId) {
+            return res.status(401).json({message: "You cannot add yourself as a friend"})
+        }
+        
+        const friendUser = await User.findById(friendId)
+        if(!friendUser) {
+            return res.status(400).json({success, message: "User not found"})
+        }
+        const currentUser = await User.findById(loggedinUser)
+        if(currentUser.friends.includes(friendId)) {
+            return res.status(400).json({success: false, message: "You are already friends."})
+        }
+        await User.findByIdAndUpdate(loggedinUser, { $addToSet: { friends: friendId }});
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message: "Internal server error"})
+    }
+}
+export {addFriend}
+
+
+const searchUser = async(req, res) => {
+    try {
+        const {username} = req.query
+        if(!username) {
+            return res.status(400).json({success: false, message: "Please send a valid username"})
+        }
+        const findUser = await User.findOne({
+            username: {$regex: `^${username}$`, $options: "i"}
+        }).select("-password")
+
+        if(!findUser) {
+            return res.status(404).json({
+                success: false, 
+                message: "User not found"
+            })
+        }
+        return res.status(200).json({success: true}, findUser)
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({message: "Some internal Error"})
+    }
+}
+export {searchUser}

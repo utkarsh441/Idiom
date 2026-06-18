@@ -22,10 +22,16 @@ const userModel = new mongoose.Schema({
     isOnline: {
         type: Boolean, 
         default: false
-    }
+    }, 
+    friends: [
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'User'
+        }
+    ]
 }, {timestamps: true}); 
 
 //compile the Schema into a model 
 //by creating "users" in MONGO
 const User = mongoose.model("User", userModel);
-export {User}
+export default User

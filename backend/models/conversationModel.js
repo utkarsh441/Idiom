@@ -13,4 +13,4 @@ const conversationModel = mongoose.Schema({
 
 const Conversation = mongoose.model("Conversation", conversationModel) 
 //the line inside the "" is what mongoose uses to registr
-export {Conversation}
+export default Conversation
