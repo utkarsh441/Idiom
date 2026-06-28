@@ -1,16 +1,28 @@
-import express from "express"
-import {register} from "../controllers/userController.js"
-import { login } from "../controllers/userController.js"
-import { logout } from "../controllers/userController.js"
-import { OtherUsers } from "../controllers/userController.js"
-import { isAuthenticated } from "../middleware/isAuthenticated.js"
-const router = express.Router() 
-console.log(router)
-router.route("/register").post(register)
+import express from "express";
+import { isAuthenticated } from "../middleware/isAuthenticated.js";
 
-router.route('/login').post(login)
+import { 
+  register, 
+  login, 
+  logout, 
+  searchUser, 
+  addFriend, 
+  OtherUsers, 
+  getChatHistory, 
+  removeFriend,
+  updateProfile
+} from "../controllers/userController.js";
 
-router.route('/logout').post(logout)
+const router = express.Router();
 
-router.route('/').get(isAuthenticated, OtherUsers)
-export default router // because we need specific names in index.js
+router.route("/register").post(register);
+router.route('/login').post(login);
+router.route('/logout').post(logout);
+router.route('/search').get(searchUser);
+router.route('/friends/add/:id').post(isAuthenticated, addFriend);
+router.route('/friends/remove/:id').post(isAuthenticated, removeFriend)
+router.route('/friends').get(isAuthenticated, OtherUsers);
+router.route('/profile/update').put(isAuthenticated, updateProfile)
+router.route('/').get(isAuthenticated, getChatHistory);
+
+export default router;
