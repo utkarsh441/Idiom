@@ -13,7 +13,11 @@ dotenv.config() //loads variables from .env file to process.env
 
 // Allows your React frontend to talk to this backend
 // Allows the browser to pass cookies/sessions back and forth
+<<<<<<< Updated upstream
 app.use(cors({origin: 'http://localhost:3000', 
+=======
+app.use(cors({origin: 'http://localhost:5173', 
+>>>>>>> Stashed changes
   credentials: true        
 }));
 //Middlewares

@@ -12,6 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@google/genai": "^2.10.0",
+<<<<<<< Updated upstream
+=======
+    "axios": "^1.18.1",
+>>>>>>> Stashed changes
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -20,6 +24,13 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.0",
     "nodemon": "^3.1.14",
-    "socket.io": "^4.8.3"
+    "react-router-dom": "^7.18.0",
+    "react-toastify": "^11.1.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "tailwindcss": "^4.3.1"
   }
 }
