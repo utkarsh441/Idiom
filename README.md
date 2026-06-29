@@ -1,12 +1,12 @@
 # Idiom
 
-A real-time AI-powered multilingual chat application that enables users to communicate seamlessly across different languages through instant message translation.
+A real-time AI-powered multilingual chat application that enables seamless communication across different languages through instant message translation.
 
 ## Overview
 
-Idiom is a real-time chat application built to eliminate language barriers in conversations. It combines Socket.IO for instant messaging with the Google Gemini API for real-time translation, allowing users to chat in their preferred languages without manual translation.
+Idiom is a real-time chat application designed to eliminate language barriers in conversations. Built using the MERN stack and Socket.IO, it delivers instant one-to-one messaging while leveraging the Google Gemini API to translate messages in real time.
 
-The application also provides secure authentication, profile management, and a friend system to deliver a smooth and intuitive messaging experience.
+The application also provides secure authentication, profile management, and a username-based friend system, offering a simple and intuitive messaging experience.
 
 ---
 
@@ -16,12 +16,12 @@ The application also provides secure authentication, profile management, and a f
 |---------|-------------|--------|
 | Real-Time Messaging | Instant one-to-one messaging using Socket.IO | ✅ |
 | AI Translation | Translate messages in real time using Google Gemini API | ✅ |
-| JWT Authentication | Secure user authentication and protected routes | ✅ |
+| JWT Authentication | Secure authentication and protected routes | ✅ |
 | Password Encryption | Password hashing using bcrypt | ✅ |
 | Friend System | Add and remove friends using usernames | ✅ |
-| Username Search | Search and connect with users | ✅ |
-| Profile Management | Upload and update profile pictures | ✅ |
-| Minimal UI | Clean and responsive chat interface | ✅ |
+| Username Search | Search and connect with users through unique usernames | ✅ |
+| Profile Management | Update profile information and profile picture | ✅ |
+| Minimal UI | Clean and responsive user interface | ✅ |
 
 ---
 
@@ -40,7 +40,7 @@ The application also provides secure authentication, profile management, and a f
 
 ## Architecture
 
-```
+```text
 React Frontend
         │
         │ REST API + Socket.IO
@@ -48,10 +48,11 @@ React Frontend
 Express Backend
         │
         ├── Authentication
-        ├── Friends
+        ├── User Management
+        ├── Friend Management
         ├── Messaging
         ├── Translation
-        └── Profiles
+        └── Profile Management
                │
                ├── MongoDB
                └── Google Gemini API
@@ -61,29 +62,31 @@ Express Backend
 
 ## Project Structure
 
-```
+```text
 Idiom
 │
 ├── Backend
-│   ├── src
-│   │   ├── controllers
-│   │   ├── routes
-│   │   ├── models
-│   │   ├── middlewares
-│   │   ├── services
-│   │   ├── sockets
-│   │   └── db
-│   ├── app.js
-│   ├── server.js
-│   └── package.json
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── services
+│   ├── sockets
+│   ├── index.js
+│   ├── package.json
+│   └── package-lock.json
 │
 └── Frontend
     ├── src
     │   ├── components
-    │   ├── pages
     │   ├── context
+    │   ├── hooks
+    │   ├── pages
     │   ├── services
-    │   └── assets
+    │   ├── App.jsx
+    │   ├── main.jsx
+    │   └── index.css
     └── package.json
 ```
 
@@ -91,16 +94,17 @@ Idiom
 
 ## Future Enhancements
 
-- Group chats
-- Online/offline status
+- Online/Offline user status
 - Last seen
-- Read receipts
 - Typing indicators
+- Read receipts
+- Group chats
 - Message scheduling
 - Chat themes
-- Push notifications
 - Image sharing in chats
 - Message search
+- Push notifications
+- Rate limiting for enhanced security
 
 ---
 
